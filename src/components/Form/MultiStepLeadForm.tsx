@@ -104,14 +104,25 @@ export default function MultiStepLeadForm({
       // Artificial delay for psychological anticipation
       await new Promise((resolve) => setTimeout(resolve, 2500));
 
-      // 🔥 GA4 lead submission event
+      // 🔥 GA4 key event — lead submission
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        // Primary key event: generate_lead (mark as key event in GA4 Admin > Events)
         window.gtag("event", "generate_lead", {
+          event_category: "Lead Form",
+          event_label: data.issueType,
           issue_type: data.issueType,
           transaction_role: data.transactionRole,
           closing_timeline: data.closingTimeline,
           zip_code: data.zipCode,
           api_success: result.success,
+          value: 1,
+          currency: "USD",
+        });
+
+        // Secondary event: form_submit for funnel tracking
+        window.gtag("event", "form_submit", {
+          event_category: "Conversion",
+          event_label: `${data.issueType} - ${data.zipCode}`,
         });
       }
 
