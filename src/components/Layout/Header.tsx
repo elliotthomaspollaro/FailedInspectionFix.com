@@ -41,9 +41,9 @@ export default function Header() {
           <Image
             src="/logo.png"
             alt="Failed Inspection Fix"
-            width={220}
-            height={73}
-            className="h-14 sm:h-[4.5rem] w-auto"
+            width={320}
+            height={106}
+            className="h-20 sm:h-[5.5rem] w-auto"
             priority
           />
         </a>
