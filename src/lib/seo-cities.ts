@@ -57,6 +57,27 @@ export function getAllCityStatePairs(): { city: string; state: string }[] {
   return pairs;
 }
 
+/**
+ * Get TOP city/state pairs for build-time pre-rendering (subset).
+ * Keeps total pre-rendered pages under Vercel Hobby tier limits.
+ * Remaining cities are served via ISR (dynamicParams = true).
+ */
+export function getTopCityPairs(): { city: string; state: string }[] {
+  const topCities: Record<string, string[]> = {
+    nj: ["newark", "jersey-city", "cherry-hill", "princeton", "hoboken"],
+    pa: ["philadelphia", "pittsburgh", "king-of-prussia", "west-chester", "doylestown"],
+    ct: ["stamford", "greenwich", "new-haven", "norwalk", "fairfield"],
+    ny: ["new-york", "yonkers", "white-plains", "scarsdale", "new-rochelle"],
+  };
+  const pairs: { city: string; state: string }[] = [];
+  for (const [state, cities] of Object.entries(topCities)) {
+    for (const city of cities) {
+      pairs.push({ city, state });
+    }
+  }
+  return pairs;
+}
+
 /** Get total city count */
 export function getCityCount(): number {
   return Object.values(SEO_CITIES).reduce((acc, cities) => acc + cities.length, 0);

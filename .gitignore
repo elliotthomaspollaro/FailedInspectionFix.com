@@ -41,3 +41,5 @@ next-env.d.ts
 
 # source data files
 keywords_utf8.csv
+
+.vercel

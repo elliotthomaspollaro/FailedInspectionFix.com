@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SiloPage from "@/components/Pages/SiloPage";
 import { buildSiloMetadata } from "@/lib/silo-metadata";
-import { getAllCityStatePairs, SEO_CITIES } from "@/lib/seo-cities";
+import { getTopCityPairs, SEO_CITIES } from "@/lib/seo-cities";
 import { getBuildSlugsForSilo } from "@/lib/seo-data";
 
 const SILO_KEY = "oil-tank-removal" as const;
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const cityPairs = getAllCityStatePairs();
+  const cityPairs = getTopCityPairs();
   const slugs = getBuildSlugsForSilo(SILO_KEY);
   const params: { state: string; city: string; slug: string }[] = [];
 
