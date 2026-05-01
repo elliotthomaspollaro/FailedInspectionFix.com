@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════
+   FailedInspectionFix.com — Design System
+   Brand palette (from logo identity board):
+     Dark Navy · Teal · Sage · Orange · Amber · Cream
+   Vibe: Corporate Real Estate Trust + Emergency Triage
+   ══════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  /* ─── Brand Palette (from colorscheme.png, L→R) ─── */
+  --color-navy:      #1C2A3A;
+  --color-navy-80:   #2B3E52;
+  --color-navy-60:   #3D566E;
+  --color-teal:      #5B8A8A;
+  --color-sage:      #7E9E87;
+  --color-orange:    #E8621A;
+  --color-amber:     #F5B731;
+  --color-cream:     #F0E6D0;
+  --color-white:     #FFFFFF;
+
+  /* ─── Derived ─── */
+  --color-clinical:   #F8F6F1;
+  --color-text-muted: #6B7D8E;
+  --color-border:     #E2DDD4;
+  --color-border-light: #F0ECE4;
+  --color-success:    #059669;
+  --color-red:        #EF4444;
+
+  /* ─── Typography ─── */
+  --font-heading: var(--font-heading), "Georgia", serif;
+  --font-body:    var(--font-body), system-ui, sans-serif;
+
+  /* ─── Shadows ─── */
+  --shadow-card: 0 2px 16px rgba(28,42,58,0.06);
+  --shadow-card-hover: 0 10px 30px rgba(28,42,58,0.1);
+  --shadow-cta: 0 4px 16px rgba(232,98,26,0.3);
+
+  /* ─── Motion ─── */
+  --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease-smooth: cubic-bezier(0.25,0.1,0.25,1);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ─── Base ─── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-clinical);
+  }
+
+  body {
+    background: var(--color-clinical);
+    color: var(--color-navy);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--color-navy);
+  }
+
+  h1 { font-size: clamp(2rem, 5vw + 0.5rem, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 3vw + 0.5rem, 2.5rem); }
+  h3 { font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem); }
+
+  p { color: var(--color-text-muted); }
+}
+
+/* ─── Focus / Selection ─── */
+:focus-visible { outline: 3px solid var(--color-teal); outline-offset: 2px; border-radius: 4px; }
+::selection { background: var(--color-orange); color: #fff; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-clinical); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 100px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* ─── Utilities ─── */
+.text-balance { text-wrap: balance; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
+}
+.card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+
+/* ─── Primary CTA (Urgent Orange — from logo "FIX" color) ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--color-orange);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #B34A10, var(--shadow-cta);
+  transition: all 0.2s var(--ease-spring);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: #D4571A;
+  box-shadow: 0 4px 0 #B34A10, 0 6px 24px rgba(232,98,26,0.4);
+  transform: translateY(-2px);
+}
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #B34A10, var(--shadow-cta);
+}
+
+/* ─── Secondary CTA (Amber) ─── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.875rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-smooth);
+}
+.btn-secondary:hover {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+/* ─── Form Inputs ─── */
+.input-field {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-navy);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-field::placeholder { color: var(--color-text-muted); }
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 4px rgba(91,138,138,0.12);
+}
+.input-field.error {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.1);
+}
+
+/* ─── Urgency Badge ─── */
+.badge-urgent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(239,68,68,0.08);
+  color: var(--color-red);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  border: 1px solid rgba(239,68,68,0.15);
+}
+
+/* ─── Animations ─── */
+@keyframes pulse-orange { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+@keyframes spin-gear    { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+@keyframes fade-in-up   { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes scanner      { 0% { transform:translateX(-100%); } 100% { transform:translateX(200%); } }
+
+.animate-pulse-orange { animation: pulse-orange 2s ease-in-out infinite; }
+.animate-spin-gear    { animation: spin-gear 2s linear infinite; }
+.animate-fade-in-up   { animation: fade-in-up 0.5s var(--ease-smooth) both; }
+.animate-scanner      { animation: scanner 1.5s ease-in-out infinite; }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+@media (max-width: 640px) {
+  .btn-primary { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; }
+}

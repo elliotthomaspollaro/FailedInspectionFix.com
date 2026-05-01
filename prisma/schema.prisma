@@ -1,0 +1,54 @@
+// ─── FailedInspectionFix.com Prisma Schema ───
+// Real Estate Inspection Emergency Lead Generation & API Switchboard
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ─── Contact Info ───
+  firstName String
+  lastName  String?
+  email     String
+  phone     String
+
+  // ─── Triage Details ───
+  issueType       String // High Radon Levels, Underground Oil Tank, Asbestos / Lead Paint, Failed Sewer Scope, Other
+  transactionRole String // Seller, Buyer, Real Estate Agent, Property Manager
+  closingTimeline String // 0-7 Days, 8-14 Days, 15+ Days, Unknown
+  zipCode         String
+
+  // ─── Source Tracking ───
+  sourceUrl   String? // The pSEO page URL they came from
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmContent  String?
+  referrer    String?
+
+  // ─── API / Monetization (Switchboard) ───
+  apiPartner     String?  // ServiceDirect, PX, Networx
+  apiPayout      Float?   // Revenue from sold lead
+  apiResponseRaw String?  // Raw JSON response for debugging
+  apiSuccess     Boolean  @default(false)
+
+  // ─── Status ───
+  // PENDING → SOLD_SERVICE_DIRECT | SOLD_PX | SOLD_NETWORX | UNSOLD_MANUAL_BROKER | EXPIRED
+  status String @default("PENDING")
+
+  // ─── Indexes for common queries ───
+  @@index([zipCode])
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+  @@index([issueType])
+  @@map("leads")
+}

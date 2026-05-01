@@ -1,0 +1,52 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * /radon-clearance/[state]/[city]/[slug]/page.tsx
+ * Silo 1: Radon Clearance — Dynamic Route
+ * ═══════════════════════════════════════════════════════════════════ */
+
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import SiloPage from "@/components/Pages/SiloPage";
+import { buildSiloMetadata } from "@/lib/silo-metadata";
+import { getAllCityStatePairs, SEO_CITIES } from "@/lib/seo-cities";
+import { getBuildSlugsForSilo } from "@/lib/seo-data";
+
+const SILO_KEY = "radon-clearance" as const;
+
+type Props = {
+  params: Promise<{ state: string; city: string; slug: string }>;
+};
+
+/* ─── Pre-render curated subset at build time ─── */
+export async function generateStaticParams() {
+  const cityPairs = getAllCityStatePairs();
+  const slugs = getBuildSlugsForSilo(SILO_KEY);
+  const params: { state: string; city: string; slug: string }[] = [];
+
+  for (const { city, state } of cityPairs) {
+    for (const slug of slugs) {
+      params.push({ state, city, slug });
+    }
+  }
+  return params;
+}
+
+/* ─── Allow ISR for non-pre-rendered paths ─── */
+export const dynamicParams = true;
+
+/* ─── Dynamic Metadata ─── */
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { state, city, slug } = await params;
+  return buildSiloMetadata(state, city, slug, SILO_KEY);
+}
+
+/* ─── Page Component ─── */
+export default async function RadonClearancePage({ params }: Props) {
+  const { state, city, slug } = await params;
+
+  // Validate state
+  if (!SEO_CITIES[state] && state.length !== 2) notFound();
+
+  return (
+    <SiloPage state={state} city={city} slug={slug} siloKey={SILO_KEY} />
+  );
+}
