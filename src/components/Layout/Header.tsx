@@ -37,7 +37,7 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between">
         {/* Logo */}
-        <a href="/" aria-label="FailedInspectionFix.com Home" className="shrink-0">
+        <a href="/" aria-label="FailedInspectionFix.com Home" className="shrink-0 -mb-6 sm:-mb-12 relative z-10">
           <Image
             src="/logo.png"
             alt="Failed Inspection Fix"
